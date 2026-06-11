@@ -468,6 +468,51 @@ npm run type
 npm run prettier
 ```
 
+#### Running Focused Checks on a Single File
+
+Before opening a pull request you can lint and type-check only the files you
+changed. This is much faster than running the full suite.
+
+**Python – lint and type-check one file**
+
+```bash
+# Lint
+ruff check superset/models/dashboard.py
+
+# Auto-fix lint issues
+ruff check --fix superset/models/dashboard.py
+
+# Format
+ruff format superset/models/dashboard.py
+
+# Type-check (via pre-commit, which picks up the mypy config automatically)
+pre-commit run mypy --files superset/models/dashboard.py
+```
+
+**TypeScript – lint and type-check one file**
+
+```bash
+cd superset-frontend
+
+# Lint with OXC
+npx oxlint --config oxlint.json src/dashboard/Dashboard.tsx
+
+# Format with Prettier
+npx prettier --write src/dashboard/Dashboard.tsx
+
+# Type-check (tsc checks the whole project; scoping to one file is not
+# supported, but you can run it to catch errors introduced by your change)
+npm run type
+```
+
+**Quick pre-commit check for staged files only**
+
+```bash
+git add superset/models/dashboard.py
+pre-commit run            # runs all hooks, but only on staged files
+pre-commit run ruff       # run a single hook on staged files
+```
+
 #### Architecture
 
 The linting system consists of two components:
