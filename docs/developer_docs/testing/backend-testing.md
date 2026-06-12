@@ -50,6 +50,16 @@ pytest
 # Run specific test file
 pytest tests/unit_tests/specific_test.py
 
+# Run a single focused test (class and/or function) via its node ID
+pytest tests/unit_tests/specific_test.py::test_my_function
+pytest tests/unit_tests/specific_test.py::TestMyClass::test_my_method
+
+# Run every test whose name matches a keyword expression
+pytest tests/unit_tests/ -k "my_function"
+
+# Focused run helpers: stop at first failure, increase verbosity
+pytest tests/unit_tests/specific_test.py::test_my_function -x -vv
+
 # Run with coverage
 pytest --cov=superset
 
