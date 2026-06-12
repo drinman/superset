@@ -240,6 +240,54 @@ pre-commit run --all-files
 # - License headers
 ```
 
+#### Running Focused Lint and Type Checks on a Single File
+
+Running checks against the entire codebase can be slow. Before opening a PR,
+you can validate individual files to get rapid feedback:
+
+**Python (backend):**
+```bash
+# Lint a single Python file with ruff
+ruff check superset/views/core.py
+
+# Auto-fix lint issues
+ruff check --fix superset/views/core.py
+
+# Format a single file
+ruff format superset/views/core.py
+
+# Type-check a single file with mypy
+mypy superset/views/core.py
+```
+
+**TypeScript / JavaScript (frontend):**
+```bash
+cd superset-frontend
+
+# Lint a single file with oxlint
+npx oxlint --config oxlint.json src/components/Button/index.tsx
+
+# Format a single file with prettier
+npx prettier --write src/components/Button/index.tsx
+
+# Type-check the entire frontend project (no single-file mode)
+npm run type
+```
+
+**Pre-commit on staged files only (faster than `--all-files`):**
+```bash
+# Stage only the files you changed
+git add superset/views/core.py
+
+# Run all hooks against staged files only
+pre-commit run
+
+# Or run a specific hook
+pre-commit run ruff
+pre-commit run mypy
+pre-commit run prettier-frontend
+```
+
 ## Responding to Reviews
 
 ### Address Feedback Promptly
